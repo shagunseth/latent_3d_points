@@ -16,8 +16,8 @@ from . autoencoder import AutoEncoder
 from . general_utils import apply_augmentations
 
 try:    
-    from .. external.structural_losses.tf_nndistance import nn_distance
-    from .. external.structural_losses.tf_approxmatch import approx_match, match_cost
+     from .. external.structural_losses.tf_nndistance import nn_distance
+     from .. external.structural_losses.tf_approxmatch import approx_match, match_cost
 except:
     print('External Losses (Chamfer-EMD) cannot be loaded. Please install them first.')
     
@@ -72,7 +72,7 @@ class PointNetAutoEncoder(AutoEncoder):
         c = self.configuration
 
         if c.loss == 'chamfer':
-            cost_p1_p2, _, cost_p2_p1, _ = nn_distance(self.x_reconstr, self.gt)
+            cost_p1_p2, _, cost_p2_p1, _= nn_distance(self.x_reconstr, self.gt)
             self.loss = tf.reduce_mean(cost_p1_p2) + tf.reduce_mean(cost_p2_p1)
         elif c.loss == 'emd':
             match = approx_match(self.x_reconstr, self.gt)
@@ -111,7 +111,7 @@ class PointNetAutoEncoder(AutoEncoder):
             fit = self.partial_fit
 
         # Loop over all batches
-        for _ in xrange(n_batches):
+        for _ in range(n_batches):
 
             if self.is_denoising:
                 original_data, _, batch_i = train_data.next_batch(batch_size)
